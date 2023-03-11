@@ -1,3 +1,3 @@
 # RBHK
- Lightweight framework for Unity Strategy/Simulation games.
+ Lightweight Package for Unity Strategy/Simulation games.
  RBHK = Resources Building Hex-based K
