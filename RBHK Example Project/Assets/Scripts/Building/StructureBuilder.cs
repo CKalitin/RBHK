@@ -5,20 +5,25 @@ using System.Linq; // For OrderBy()
 using UnityEngine;
 
 public class StructureBuilder : MonoBehaviour {
+    [Header("Config")]
+    [Tooltip("Id of the player associated with this Resource Management instance.")]
+    [SerializeField] private int playerId;
+
+    [Header("Building")]
     [SerializeField] private StructureBuildInfo currentStructureBuildInfo;
     [Space]
     [SerializeField] private bool buildingEnabled;
     [SerializeField] private bool destroyingEnabled;
+
+    private bool buildingAllowedOnTile = false; // Determined in Builder(), if structure can be placed on tile
+
+    public int PlayerId { get => playerId; set => playerId = value; }
 
     private GameObject displayStructure; // Transparent thingy that shows where it's gonna be built
     private StructureBuildInfo previousStructureBuildInfo; // This is for switching buildInfo and updating display structure
 
     public bool BuildingEnabled { get => buildingEnabled; set => buildingEnabled = value; }
     public StructureBuildInfo CurrentStructureBuildInfo { get => currentStructureBuildInfo; set => currentStructureBuildInfo = value; }
-
-    void Start() {
-        
-    }
 
     void Update() {
         if (buildingEnabled) {
@@ -33,18 +38,24 @@ public class StructureBuilder : MonoBehaviour {
         Transform structureLocationsParent;
         Transform structureLoc;
         Transform tile;
-
-        // Checks to exit function
+        
+        // If can't afford structure
+        if (!CanAffordStructure()) { buildingAllowedOnTile = false; return; }
         // If there is no tile under the cursor
-        if ((structureLocationsParent = GetTargetTile()) == null) return;
+        if ((structureLocationsParent = GetTargetTile()) == null) { buildingAllowedOnTile = false; return; }
         // If there is no available structure location
-        if ((structureLoc = GetClosestAvailableStructureLocation(structureLocationsParent, currentStructureBuildInfo.StructureSize)) == null) return;
+        if ((structureLoc = GetClosestAvailableStructureLocation(structureLocationsParent, currentStructureBuildInfo.StructureSize)) == null) { buildingAllowedOnTile = false; return; }
         // If there is no Tile script on the parent
-        if ((tile = structureLocationsParent.parent) == null) return;
+        if ((tile = structureLocationsParent.parent) == null) { buildingAllowedOnTile = false; return; }
+        // If tile is not taken by another player
+        if (!CheckTileStructuresPlayerIDs(tile.GetComponent<Tile>())) { buildingAllowedOnTile = false; return; }
+        
+        // If all checks are passed
+        buildingAllowedOnTile = true;
 
-        if (!Input.GetMouseButtonDown(0)) return; // If left click is pressed, continue
-
-        InstantiateStructure(structureLoc, tile);
+        if (Input.GetMouseButtonDown(0)) {
+            InstantiateStructure(structureLoc, tile);
+        }
     }
 
     private void Destroyer() {
@@ -65,6 +76,8 @@ public class StructureBuilder : MonoBehaviour {
 
         _structureLocation.GetComponent<StructureLocation>().AssignedStructure = newStructure;
         newStructure.GetComponent<Structure>().StructureLocation = _structureLocation.GetComponent<StructureLocation>();
+
+        ApplyStructureCost();
     }
 
     private void DisplayStructure() {
@@ -157,6 +170,31 @@ public class StructureBuilder : MonoBehaviour {
             return hit.transform;
         } else {
             return null;
+        }
+    }
+
+    private bool CheckTileStructuresPlayerIDs(Tile _tile) {
+        // Return false if there is another player's structure on the tile
+        bool output = true;
+        for (int i = 0; i < _tile.Structures.Count; i++) {
+            if (_tile.Structures[i].PlayerId != playerId) output = false;
+        }
+        return output;
+    }
+
+    public bool CanAffordStructure() {
+        bool output = true;
+        for (int i = 0; i < currentStructureBuildInfo.Cost.Length; i++) {
+            if (currentStructureBuildInfo.Cost[i].Amount >= ResourceManagement.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply)
+                output = false;
+        }
+
+        return output;
+    }
+
+    private void ApplyStructureCost() {
+        for (int i = 0; i < currentStructureBuildInfo.Cost.Length; i++) {
+            ResourceManagement.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply -= currentStructureBuildInfo.Cost[i].Amount;
         }
     }
 

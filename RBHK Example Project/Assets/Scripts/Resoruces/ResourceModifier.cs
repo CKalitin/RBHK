@@ -14,8 +14,11 @@ public class ResourceModifier : ScriptableObject {
     [Tooltip("The corresponding Resource Entry is changed by this percentage. The Resource Entry is multiplied by this so eg. 5 * 1 = 5, the base value has to be 1")]
     [SerializeField] private float percentageChange = 1;
 
+    private int targetPlayerID = -1;
+
     public GameResources ResourceIdTarget { get => resourceIdTarget; set => resourceIdTarget = value; }
     public ResourceEntries ResourceEntryIdTarget { get => resourceEntryIdTarget; set => resourceEntryIdTarget = value; }
     public float Change { get => change; set => change = value; }
     public float PercentageChange { get => percentageChange; set => percentageChange = value; }
+    public int TargetPlayerID { get => targetPlayerID; set => targetPlayerID = value; }
 }

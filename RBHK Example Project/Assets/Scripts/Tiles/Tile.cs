@@ -33,11 +33,7 @@ public class Tile : MonoBehaviour {
             UpdateResourceModifiers(); // Putting this line here just in case
         }
     }
-
-    void Update() {
-        
-    }
-
+    
     public void ApplyTileRules() {
         List<Vector2Int> adjacentTiles = TileManagement.instance.GetAdjacentTilesInRadius(tileInfo.Location, 1, true);
 

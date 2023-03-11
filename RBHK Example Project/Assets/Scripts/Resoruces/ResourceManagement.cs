@@ -5,20 +5,27 @@ using UnityEngine;
 public class ResourceManagement : MonoBehaviour {
     #region Varibles
 
-    public static ResourceManagement instance;
+    public static Dictionary<int, ResourceManagement> instances = new Dictionary<int, ResourceManagement>();
+
+    [Header("Config")]
+    [Tooltip("Id of the player associated with this Resource Management instance.")]
+    [SerializeField] private int playerId;
 
     [Header("Resources")]
     [SerializeField] private Resource[] resources;
     [Space]
     [Tooltip("Period of time between changes to resource supply by demand.")]
     [SerializeField] private float tickTime;
+    [Space]
+    public List<ResourceEntry> resourceEntriesDisplay;
 
     // Resouces are grouped by their tick time
     // First element in value list is reserved for the number of times the tick has been done, This is used in TickUpdate()
     private Dictionary<float, List<int>> resourceTicks = new Dictionary<float, List<int>>();
 
+    public int PlayerId { get => playerId; set => playerId = value; }
+
     private RBHKUtils.IndexList<ResourceEntry> resourceEntries = new RBHKUtils.IndexList<ResourceEntry>();
-    public List<ResourceEntry> resourceEntriesDisplay;
 
     private float totalDeltaTime = 0;
 
@@ -39,13 +46,12 @@ public class ResourceManagement : MonoBehaviour {
     #endregion
 
     #region Core Utils
-
-    // Called in Awake
+    
     private void Singleton() {
-        if (FindObjectsOfType<TileManagement>().Length > 1) {
-            Destroy(this);
+        if (instances.ContainsKey(playerId)) {
+            Debug.LogError($"Resource Management Instance Id: ({playerId}) already exists.");
         } else {
-            instance = this;
+            instances.Add(playerId, this);
         }
     }
 

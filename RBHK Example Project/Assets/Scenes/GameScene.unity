@@ -1425,6 +1425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f404723f588e6a4f844147239aba65b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   resources:
   - {fileID: 11400000, guid: 79d721a582720d64482eb8b2d1cbaff2, type: 2}
   tickTime: 3
@@ -3512,6 +3513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594acbcfc6cde7245bfbb7a56578b5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   currentStructureBuildInfo: {fileID: 11400000, guid: cf2d0e85d8fb83b4bafd3bfafe3a6e85, type: 2}
   buildingEnabled: 1
   destroyingEnabled: 0
