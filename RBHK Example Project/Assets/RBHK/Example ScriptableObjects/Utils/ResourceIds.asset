@@ -16,6 +16,6 @@ MonoBehaviour:
   - Gold
   resourceEntryIds:
   - Upkeep
-  resourceEnumPath: Assets/Other/Enums/
+  resourceEnumPath: Assets/RBHK/Enums/
   resourceEnumName: GameResources
   resourceEntryEnumName: ResourceEntries

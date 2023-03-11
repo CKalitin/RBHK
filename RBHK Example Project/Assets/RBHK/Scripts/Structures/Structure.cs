@@ -195,7 +195,6 @@ public class Structure : MonoBehaviour {
 
     private void AddResourceEntriesToManagement() {
         for (int i = 0; i < resourceEntries.Length; i++) {
-            Debug.Log("object", gameObject);
             appliedResourceEntryIndexes.Add(ResourceManagement.instances[playerId].AddResourceEntry(resourceEntries[i]));
         }
     }
