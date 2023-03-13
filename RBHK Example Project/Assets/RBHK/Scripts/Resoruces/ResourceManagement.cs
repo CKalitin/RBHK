@@ -16,7 +16,9 @@ public class ResourceManagement : MonoBehaviour {
     [Space]
     [Tooltip("Period of time between changes to resource supply by demand.")]
     [SerializeField] private float tickTime;
+    [SerializeField] private bool updateResourcesOnTick = true;
     [Space]
+    [Tooltip("This exists only so you can see the resource entries.")]
     public List<ResourceEntry> resourceEntriesDisplay;
 
     // Resouces are grouped by their tick time
@@ -39,7 +41,7 @@ public class ResourceManagement : MonoBehaviour {
     }
 
     private void Update() {
-        TickUpdate();
+        if (updateResourcesOnTick) TickUpdate();
         resourceEntriesDisplay = resourceEntries.Values;
     }
 
