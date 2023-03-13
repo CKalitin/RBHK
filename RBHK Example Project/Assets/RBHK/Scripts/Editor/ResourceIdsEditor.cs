@@ -34,9 +34,6 @@ public class ResourceIdsEditor : Editor {
             AssetDatabase.Refresh();
         }
 
-        // A tooltip to inform the user about the use of the button above
-        GUILayout.TextArea("Press this button every time you update the resource Ids array.", tooltipStyle);
-
         VerticalBreak();
 
         HelpBox();

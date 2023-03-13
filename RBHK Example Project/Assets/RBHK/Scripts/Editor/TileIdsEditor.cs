@@ -33,10 +33,7 @@ public class TileIdsEditor : Editor {
             // This is used to refresh the assets which adds the newly generated enums
             AssetDatabase.Refresh();
         }
-
-        // A tooltip to inform the user about the use of the button above
-        GUILayout.TextArea("Press this button every time you update the tile Ids array.", tooltipStyle);
-
+        
         VerticalBreak();
 
         HelpBox();

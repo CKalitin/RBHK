@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileIds:
   - TestTile
-  tileEnumPath: Assets/Other/Enums/
+  tileEnumPath: Assets/RBHK/Enums/
   tileEnumName: Tiles
