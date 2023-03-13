@@ -85,6 +85,9 @@ public class StructureBuilder : MonoBehaviour {
         Transform structureLoc;
         Transform tile;
 
+        // This is just here so Unity stops giving me warnings
+        if (buildingAllowedOnTile) { }
+
         // Checks to exit function (Same as Builder())
         // If there is no tile under the cursor
         if ((structureLocationsParent = GetTargetTile()) == null) { DestroyDisplayStructure(); return; }
@@ -177,7 +180,7 @@ public class StructureBuilder : MonoBehaviour {
         // Return false if there is another player's structure on the tile
         bool output = true;
         for (int i = 0; i < _tile.Structures.Count; i++) {
-            if (_tile.Structures[i].PlayerId != playerId) output = false;
+            if (_tile.Structures[i].PlayerId != playerId & _tile.Structures[i].PlayerId != -1) output = false;
         }
         return output;
     }
@@ -185,7 +188,7 @@ public class StructureBuilder : MonoBehaviour {
     public bool CanAffordStructure() {
         bool output = true;
         for (int i = 0; i < currentStructureBuildInfo.Cost.Length; i++) {
-            if (currentStructureBuildInfo.Cost[i].Amount >= ResourceManagement.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply)
+            if (currentStructureBuildInfo.Cost[i].Amount >= ResourceManager.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply)
                 output = false;
         }
 
@@ -194,7 +197,7 @@ public class StructureBuilder : MonoBehaviour {
 
     private void ApplyStructureCost() {
         for (int i = 0; i < currentStructureBuildInfo.Cost.Length; i++) {
-            ResourceManagement.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply -= currentStructureBuildInfo.Cost[i].Amount;
+            ResourceManager.instances[playerId].GetResource(currentStructureBuildInfo.Cost[i].Resource).Supply -= currentStructureBuildInfo.Cost[i].Amount;
         }
     }
 
