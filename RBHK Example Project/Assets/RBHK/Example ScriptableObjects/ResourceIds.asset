@@ -17,5 +17,5 @@ MonoBehaviour:
   resourceEntryIds:
   - Upkeep
   resourceEnumPath: Assets/RBHK/Enums/
-  resourceEnumName: GameResources
-  resourceEntryEnumName: ResourceEntries
+  resourceEnumName: GameResource
+  resourceEntryEnumName: GameResourceEntry

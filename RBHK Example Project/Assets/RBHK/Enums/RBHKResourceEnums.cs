@@ -1,7 +1,7 @@
-public enum GameResources { 
+public enum GameResource { 
 	Gold,
 }
 
-public enum ResourceEntries { 
+public enum GameResourceEntry { 
 	Upkeep,
 }
