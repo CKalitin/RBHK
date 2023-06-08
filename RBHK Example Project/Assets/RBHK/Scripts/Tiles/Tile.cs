@@ -19,6 +19,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] private List<Structure> structures = new List<Structure>();
     [Tooltip("DEBUG FIELD DON'T CHANGE VALUES\nResource Modifiers that will be applied to all buildings on this tile.")]
     [SerializeField] private RBHKUtils.IndexList<ResourceModifier> resourceModifiers = new RBHKUtils.IndexList<ResourceModifier>();
+    [Space]
+    [SerializeField] private Vector2Int location;
 
     private TileInfo tileInfo;
 
@@ -28,12 +30,15 @@ public class Tile : MonoBehaviour {
     public Transform StructureLocationsParent { get => structureLocationsParent; set => structureLocationsParent = value; }
     public List<Structure> Structures { get => structures; set => structures = value; }
     public RBHKUtils.IndexList<ResourceModifier> ResourceModifiers { get => resourceModifiers; set => resourceModifiers = value; }
+    public Vector2Int Location { get => location; set => location = value; }
 
     void Start() {
         if (TileManagement.instance.SpawningComplete) {
             ApplyTileRules();
             UpdateResourceModifiers(); // Putting this line here just in case
         }
+
+        location = TileInfo.Location;
     }
     
     public void ApplyTileRules() {
