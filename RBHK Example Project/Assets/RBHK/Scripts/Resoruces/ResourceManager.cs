@@ -191,7 +191,7 @@ public class ResourceManager : MonoBehaviour {
             resourceEntries.Add(resourceEntries.Count, _resourceEntry);
 
             Resource resource = GetResource(_resourceEntry.ResourceId); // Get Resource this entry modifies
-            resource.Demand += _resourceEntry.Change; // Add change to Demand
+            if (!updateResourcesOnTick) resource.Demand += _resourceEntry.Change; // Add change to Demand
 
             if (OnResourcesChanged != null) OnResourcesChanged(playerId);
 
@@ -200,7 +200,7 @@ public class ResourceManager : MonoBehaviour {
             resourceEntries.Add(resourceEntries.Count, _resourceEntry);
 
             Resource resource = GetResource(_resourceEntry.ResourceId); // Get Resource this entry modifies
-            resource.Supply += _resourceEntry.Change; // Add change to Supply
+            if (!updateResourcesOnTick) resource.Supply += _resourceEntry.Change; // Add change to Supply
 
             if (OnResourcesChanged != null) OnResourcesChanged(playerId);
 
