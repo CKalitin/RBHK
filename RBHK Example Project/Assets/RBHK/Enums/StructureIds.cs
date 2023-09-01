@@ -1,3 +1,18 @@
 public enum StructureID { 
 	Base,
+	ConstructionFarm,
+	ConstructionFort,
+	ConstructionFoundry,
+	ConstructionLumberhut,
+	ConstructionVillage,
+	Farm,
+	Fort,
+	Foundry,
+	Lumberhut,
+	Null,
+	Rock,
+	Tree,
+	Village,
+	Water,
+	Bear,
 }

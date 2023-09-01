@@ -1,4 +1,8 @@
 public enum Tiles { 
 	Null,
-	TestTile,
+	Grass,
+	Forest,
+	Mountain,
+	Water,
+	Bear,
 }
